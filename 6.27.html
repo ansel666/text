@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+</head>
+<body>
+    
+    <script>
+        var arr = [1,2,[3,4,[5,6,[7,8]]]];
+
+        function newarr(arr) {
+            var result = [];
+            for (var i = 0, len = arr.length; i < len; i++) {
+                if (Array.isArray(arr[i])) {
+                    result = result.concat(newarr(arr[i]))
+                }
+                else {
+                    result.push(arr[i])
+                }
+            }
+            return result;
+        }
+
+        console.log(newarr(arr))
+
+        var arr=[1,[2,[3,4]]];
+        flatten(arr);
+        function flatten(arr){
+            return arr.reduce(function(prev,next){
+                console.log(prev);
+                    return prev.concat(Array.isArray(next)?flatten(next):next);
+            },[]);//reduce的第二个参数：作为归并基础的初始值
+        }
+
+        function flatten(arr){
+            while(arr.some(item=>Array.isArray(item))){
+                arr=[].concat(...arr);
+                console.log(arr);
+            }
+            return arr;
+        }
+
+        [1,[2,[3,4]]].toString();//[1,2,3,4]
+
+        function flatten(arr){
+            return arr.toString().split(",").map(function(item){
+                return +item;//一元加运算符，对数值型不产生影响，对非数值型，会像Number一样对这个值进行转换
+            });
+        }
+
+
+
+    
+    </script>
+</body>
+</html>
